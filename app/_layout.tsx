@@ -9,6 +9,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { MoonStarIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -21,12 +22,15 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack
-        screenOptions={() => ({
-          headerTransparent: true,
-          headerRight: () => <ThemeToggle />,
-        })}
-      />
+      <SafeAreaProvider>
+        <Stack
+          screenOptions={() => ({
+            headerTransparent: true,
+            headerRight: () => <ThemeToggle />,
+          })}
+        />
+      </SafeAreaProvider>
+
       <PortalHost />
     </ThemeProvider>
   );
