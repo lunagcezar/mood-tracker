@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { cn } from '@/lib/utils';
 import { Icon } from './icon';
 import { LucideIcon } from 'lucide-react-native';
@@ -10,19 +11,22 @@ interface FABProps {
   className?: string;
 }
 
-function FAB({ onPress, icon, label, className }: FABProps) {
+export default function FAB({ onPress, icon, label, className }: FABProps) {
+  const insets = useSafeAreaInsets();
   return (
     <TouchableOpacity
       className={cn(
-        'absolute bottom-8 right-6 items-center justify-center rounded-full bg-neutral-800 p-4 text-white shadow-lg dark:bg-neutral-100 dark:text-neutral-900',
+        'absolute flex-row items-center justify-center gap-2 rounded-full bg-neutral-800 p-4 shadow-lg dark:bg-neutral-100',
         className
       )}
+      style={{ bottom: 32 + insets.bottom, right: 32 + insets.right }}
       onPress={onPress}
+      activeOpacity={0.5}
       accessibilityRole="button">
-      {icon ? <Icon as={icon} /> : null}
-      {label ? <Text className="text-base font-bold">{label}</Text> : null}
+      {label ? (
+        <Text className="text-base font-bold text-white dark:text-neutral-900">{label}</Text>
+      ) : null}
+      {icon ? <Icon as={icon} className="size-6 text-white dark:text-neutral-900" /> : null}
     </TouchableOpacity>
   );
 }
-
-export default FAB;
