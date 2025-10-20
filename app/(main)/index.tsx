@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SCREEN_OPTIONS = {
   title: 'Mood Tracker',
-  headerTransparent: true,
 };
 
 export default function RootIndex() {

@@ -5,10 +5,11 @@ import '@/global.css';
 import { NAV_THEME } from '@/lib/theme';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { MoonStarIcon, SunIcon } from 'lucide-react-native';
+import { MoonStarIcon, PlusIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
+import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
@@ -26,7 +27,8 @@ export default function RootLayout() {
         <Stack
           screenOptions={() => ({
             headerTransparent: true,
-            headerRight: () => <ThemeToggle />,
+            headerRight: () => <HeaderButtons />,
+            contentStyle: { alignItems: 'center' },
           })}
         />
         <PortalHost />
@@ -35,21 +37,25 @@ export default function RootLayout() {
   );
 }
 
-const THEME_ICONS = {
+const TOGGLE_COLOR_SCHEME_ICONS = {
   light: SunIcon,
   dark: MoonStarIcon,
 };
 
-function ThemeToggle() {
+function HeaderButtons() {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
-    <Button
-      onPressIn={toggleColorScheme}
-      size="icon"
-      variant="ghost"
-      className="ios:size-9 rounded-full web:mx-4">
-      <Icon as={THEME_ICONS[colorScheme ?? 'light']} className="size-5" />
-    </Button>
+    <View className="flex flex-row gap-2">
+      <Link href="/create" asChild>
+        <Button size="icon" variant="ghost" className="rounded-full">
+          <Icon as={PlusIcon} className="size-5" />
+        </Button>
+      </Link>
+
+      <Button onPressIn={toggleColorScheme} size="icon" variant="ghost" className="rounded-full">
+        <Icon as={TOGGLE_COLOR_SCHEME_ICONS[colorScheme ?? 'light']} className="size-5" />
+      </Button>
+    </View>
   );
 }
