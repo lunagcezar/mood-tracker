@@ -15,6 +15,7 @@ import { EllipsisVerticalIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Text } from '@/components/ui/core/text';
+import { Icon } from '@/components/ui/core/icon';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,11 +46,13 @@ function HeaderButtons() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <EllipsisVerticalIcon />
+        <Icon as={EllipsisVerticalIcon} className="size-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem asChild>
-          <Link href="/settings">Settings</Link>
+          <Link href="/settings">
+            <Text>Settings</Text>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild onPressIn={toggleColorScheme}>
           <Text>Color scheme</Text>
