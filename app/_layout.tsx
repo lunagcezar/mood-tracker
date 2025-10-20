@@ -1,5 +1,9 @@
-import { Button } from '@/components/ui/core/button';
-import { Icon } from '@/components/ui/core/icon';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/core/dropdown-menu';
 import '@/global.css';
 
 import { NAV_THEME } from '@/lib/theme';
@@ -7,10 +11,10 @@ import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { MoonStarIcon, PlusIcon, SunIcon } from 'lucide-react-native';
+import { EllipsisVerticalIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
-import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Text } from '@/components/ui/core/text';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -35,24 +39,22 @@ export default function RootLayout() {
   );
 }
 
-const TOGGLE_COLOR_SCHEME_ICONS = {
-  light: SunIcon,
-  dark: MoonStarIcon,
-};
-
 function HeaderButtons() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { toggleColorScheme } = useColorScheme();
 
   return (
-    <View className="flex flex-row gap-2 web:mr-2">
-      <Link href="/create" asChild>
-        <Button size="icon" variant="ghost" className="rounded-full">
-          <Icon as={PlusIcon} className="size-5" />
-        </Button>
-      </Link>
-      <Button onPressIn={toggleColorScheme} size="icon" variant="ghost" className="rounded-full">
-        <Icon as={TOGGLE_COLOR_SCHEME_ICONS[colorScheme ?? 'light']} className="size-5" />
-      </Button>
-    </View>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <EllipsisVerticalIcon />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem asChild>
+          <Link href="/settings">Settings</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild onPressIn={toggleColorScheme}>
+          <Text>Color scheme</Text>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

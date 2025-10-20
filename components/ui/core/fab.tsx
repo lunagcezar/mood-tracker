@@ -19,7 +19,7 @@ export default function FAB({ onPress, icon, label, className }: FABProps) {
         'absolute flex-row items-center justify-center gap-2 rounded-full bg-neutral-800 p-4 shadow-lg dark:bg-neutral-100',
         className
       )}
-      style={{ bottom: 32 + insets.bottom, right: 32 + insets.right }}
+      style={{ bottom: 24 + insets.bottom, right: 24 + insets.right }}
       onPress={onPress}
       activeOpacity={0.5}
       accessibilityRole="button">
