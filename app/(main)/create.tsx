@@ -1,8 +1,8 @@
-import { Slider } from '@/components/ui/slider';
+import { Slider } from '@/components/ui/core/slider';
 import { Stack } from 'expo-router';
 import * as React from 'react';
 import CommunitySlider from '@react-native-community/slider';
-import { ScreenContainer } from '@/components/ui/screen-container';
+import { ScreenContainer } from '@/components/ui/core/screen-container';
 
 const SCREEN_OPTIONS = {
   title: 'Create a new Entry',

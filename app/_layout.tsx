@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
+import { Button } from '@/components/ui/core/button';
+import { Icon } from '@/components/ui/core/icon';
 import '@/global.css';
 
 import { NAV_THEME } from '@/lib/theme';

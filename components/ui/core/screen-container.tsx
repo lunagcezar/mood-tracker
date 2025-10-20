@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils';
 import { PropsWithChildren } from 'react';
 
 type ScreenContainerProps = PropsWithChildren<{

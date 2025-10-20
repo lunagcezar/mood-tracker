@@ -1,4 +1,4 @@
-import { ScreenContainer } from '@/components/ui/screen-container';
+import { ScreenContainer } from '@/components/ui/core/screen-container';
 import { Stack } from 'expo-router';
 import * as React from 'react';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import CommunitySlider from '@react-native-community/slider';
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const sliderVariants = cva(cn('w-full'), {
@@ -34,7 +34,7 @@ export type SliderProps = React.ComponentProps<typeof CommunitySlider> &
 
 export function Slider({ label, value, className, variant, size, ...props }: SliderProps) {
   return (
-    <View className="items-center gap-4">
+    <View className="gap-4">
       {label && <Text className="text-base text-neutral-800 dark:text-neutral-200">{label}</Text>}
       <CommunitySlider
         value={value}
