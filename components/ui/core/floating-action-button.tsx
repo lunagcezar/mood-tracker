@@ -1,10 +1,11 @@
-import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import { cn } from '@/lib/utils';
+import { Icon } from './icon';
+import { LucideIcon } from 'lucide-react-native';
 
 interface FABProps {
   onPress: () => void;
-  icon?: React.ReactNode;
+  icon?: LucideIcon;
   label?: string;
   className?: string;
 }
@@ -13,15 +14,13 @@ function FAB({ onPress, icon, label, className }: FABProps) {
   return (
     <TouchableOpacity
       className={cn(
-        'absolute bottom-8 right-6 items-center justify-center rounded-full bg-neutral-800 p-4 shadow-lg dark:bg-neutral-100',
+        'absolute bottom-8 right-6 items-center justify-center rounded-full bg-neutral-800 p-4 text-white shadow-lg dark:bg-neutral-100 dark:text-neutral-900',
         className
       )}
       onPress={onPress}
       accessibilityRole="button">
-      {icon ? <View>{icon}</View> : null}
-      {label ? (
-        <Text className="text-base font-bold text-white dark:text-neutral-900">{label}</Text>
-      ) : null}
+      {icon ? <Icon as={icon} /> : null}
+      {label ? <Text className="text-base font-bold">{label}</Text> : null}
     </TouchableOpacity>
   );
 }

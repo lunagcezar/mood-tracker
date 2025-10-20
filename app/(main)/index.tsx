@@ -14,7 +14,7 @@ export default function MainIndex() {
   return (
     <ScreenContainer>
       <Stack.Screen options={SCREEN_OPTIONS} />
-      <FAB onPress={() => router.push('/create')} icon={<PlusIcon />} />
+      <FAB onPress={() => router.push('/create')} icon={PlusIcon} />
     </ScreenContainer>
   );
 }
