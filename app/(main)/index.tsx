@@ -1,4 +1,4 @@
-import FAB from '@/components/ui/core/floating-action-button';
+import FAB from '@/components/ui/core/fab';
 import { ScreenContainer } from '@/components/ui/core/screen-container';
 import { Stack, useRouter } from 'expo-router';
 import { PlusIcon } from 'lucide-react-native';
