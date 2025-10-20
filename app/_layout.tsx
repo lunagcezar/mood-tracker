@@ -52,7 +52,6 @@ function HeaderButtons() {
           <Icon as={PlusIcon} className="size-5" />
         </Button>
       </Link>
-
       <Button onPressIn={toggleColorScheme} size="icon" variant="ghost" className="rounded-full">
         <Icon as={TOGGLE_COLOR_SCHEME_ICONS[colorScheme ?? 'light']} className="size-5" />
       </Button>
