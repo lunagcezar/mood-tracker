@@ -14,7 +14,7 @@ const sliderVariants = cva(cn('w-full'), {
       danger: 'text-red-500',
     },
     size: {
-      default: '',
+      default: 'h-10',
       sm: '',
       lg: '',
       icon: '',
@@ -34,16 +34,14 @@ export type SliderProps = React.ComponentProps<typeof CommunitySlider> &
 
 export function Slider({ label, value, className, variant, size, ...props }: SliderProps) {
   return (
-    <View className="w-full items-center py-2">
-      {label && (
-        <Text className="mb-1 text-base text-neutral-800 dark:text-neutral-200">{label}</Text>
-      )}
+    <View className="items-center gap-4">
+      {label && <Text className="text-base text-neutral-800 dark:text-neutral-200">{label}</Text>}
       <CommunitySlider
         value={value}
         className={cn(sliderVariants({ variant, size }), className)}
         {...props}
       />
-      <Text className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>
+      <Text className="text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>
     </View>
   );
 }

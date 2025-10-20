@@ -1,17 +1,26 @@
 import { Slider } from '@/components/ui/slider';
 import { Stack } from 'expo-router';
 import * as React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import CommunitySlider from '@react-native-community/slider';
+import { ScreenContainer } from '@/components/ui/screen-container';
 
 const SCREEN_OPTIONS = {
-  title: 'Create new Entry',
+  title: 'Create a new Entry',
 };
 
 export default function MainCreate() {
+  const [sliderValue, setSliderValue] = React.useState(1);
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-center gap-8 p-4">
+    <ScreenContainer>
       <Stack.Screen options={SCREEN_OPTIONS} />
-      <Slider />
-    </SafeAreaView>
+      <Slider
+        label="Value"
+        value={sliderValue}
+        onValueChange={setSliderValue}
+        maximumValue={10}
+        minimumValue={1}
+        step={1}
+      />
+    </ScreenContainer>
   );
 }

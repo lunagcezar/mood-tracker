@@ -1,6 +1,6 @@
+import { ScreenContainer } from '@/components/ui/screen-container';
 import { Stack } from 'expo-router';
 import * as React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SCREEN_OPTIONS = {
   title: 'Mood Tracker',
@@ -8,8 +8,8 @@ const SCREEN_OPTIONS = {
 
 export default function MainIndex() {
   return (
-    <SafeAreaView className="flex flex-1 items-center justify-center gap-8 p-4">
+    <ScreenContainer>
       <Stack.Screen options={SCREEN_OPTIONS} />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }

@@ -10,7 +10,6 @@ import { StatusBar } from 'expo-status-bar';
 import { MoonStarIcon, PlusIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -22,17 +21,13 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <SafeAreaProvider>
-        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-        <Stack
-          screenOptions={() => ({
-            headerTransparent: true,
-            headerRight: () => <HeaderButtons />,
-            contentStyle: { alignItems: 'center' },
-          })}
-        />
-        <PortalHost />
-      </SafeAreaProvider>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <Stack
+        screenOptions={() => ({
+          headerRight: () => <HeaderButtons />,
+        })}
+      />
+      <PortalHost />
     </ThemeProvider>
   );
 }
@@ -46,7 +41,7 @@ function HeaderButtons() {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
-    <View className="flex flex-row gap-2">
+    <View className="flex flex-row gap-2 web:mr-2">
       <Link href="/create" asChild>
         <Button size="icon" variant="ghost" className="rounded-full">
           <Icon as={PlusIcon} className="size-5" />
