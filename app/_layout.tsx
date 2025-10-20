@@ -21,17 +21,16 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
       <SafeAreaProvider>
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
         <Stack
           screenOptions={() => ({
             headerTransparent: true,
             headerRight: () => <ThemeToggle />,
           })}
         />
+        <PortalHost />
       </SafeAreaProvider>
-
-      <PortalHost />
     </ThemeProvider>
   );
 }
