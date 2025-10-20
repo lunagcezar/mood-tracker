@@ -7,7 +7,7 @@ const SCREEN_OPTIONS = {
   title: 'Create new Entry',
 };
 
-export default function RootIndex() {
+export default function MainCreate() {
   return (
     <SafeAreaView className="flex flex-1 items-center justify-center gap-8 p-4">
       <Stack.Screen options={SCREEN_OPTIONS} />
