@@ -13,7 +13,6 @@ import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { EllipsisVerticalIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Text } from '@/components/ui/core/text';
 import { Icon } from '@/components/ui/core/icon';
 
@@ -42,11 +41,11 @@ function HeaderButtons() {
   const { toggleColorScheme } = useColorScheme();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu className="web:mr-4">
       <DropdownMenuTrigger>
         <Icon as={EllipsisVerticalIcon} className="size-6" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="mt-5">
         <DropdownMenuItem asChild>
           <Link href="/settings">
             <Text>Settings</Text>
