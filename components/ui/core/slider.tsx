@@ -30,9 +30,18 @@ export type SliderProps = React.ComponentProps<typeof CommunitySlider> &
   VariantProps<typeof sliderVariants> & {
     label?: string;
     className?: string;
+    hasValue?: boolean;
   };
 
-export function Slider({ label, value, className, variant, size, ...props }: SliderProps) {
+export function Slider({
+  label,
+  value,
+  className,
+  hasValue = false,
+  variant,
+  size,
+  ...props
+}: SliderProps) {
   return (
     <View className="gap-4">
       {label && <Text className="text-base text-neutral-800 dark:text-neutral-200">{label}</Text>}
@@ -41,7 +50,7 @@ export function Slider({ label, value, className, variant, size, ...props }: Sli
         className={cn(sliderVariants({ variant, size }), className)}
         {...props}
       />
-      <Text className="text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>
+      {hasValue && <Text className="text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>}
     </View>
   );
 }

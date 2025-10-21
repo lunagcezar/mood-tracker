@@ -17,7 +17,6 @@ export default function MainCreate() {
     <ScreenContainer>
       <Stack.Screen options={SCREEN_OPTIONS} />
       <Slider
-        label="Value"
         value={dayRatingValue}
         onValueChange={setDayRatingValue}
         maximumValue={10}
