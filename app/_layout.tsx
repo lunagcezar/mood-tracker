@@ -51,7 +51,7 @@ function HeaderButtons() {
             <Text>Settings</Text>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild onPressIn={toggleColorScheme}>
+        <DropdownMenuItem onPress={toggleColorScheme}>
           <Text>Color scheme</Text>
         </DropdownMenuItem>
       </DropdownMenuContent>
