@@ -1,15 +1,11 @@
 import { cn } from '../../../lib/utils';
 import { PropsWithChildren } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 
 type ScreenContainerProps = PropsWithChildren<{
   className?: string;
 }>;
 
 export function ScreenContainer({ children, className }: ScreenContainerProps) {
-  return (
-    <SafeAreaView className={cn('flex h-full w-full flex-1 gap-4 p-4', className)}>
-      {children}
-    </SafeAreaView>
-  );
+  return <View className={cn('flex h-full w-full flex-1 gap-4 p-4', className)}>{children}</View>;
 }
