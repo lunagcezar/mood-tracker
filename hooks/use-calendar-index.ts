@@ -1,15 +1,15 @@
-import * as React from 'react';
 import { useEntriesByPrefix } from '@/hooks/use-tanstack';
 import { extractDateFromId, getCalendarDays } from '@/lib/date';
 import { MoodData } from '@/types/mood';
+import { useCallback, useMemo, useState } from 'react';
 
 export function useCalendarIndex() {
   const moodData = useEntriesByPrefix<MoodData>('mood');
   const today = new Date();
-  const [currentMonth, setCurrentMonth] = React.useState(today.getMonth());
-  const [currentYear, setCurrentYear] = React.useState(today.getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
-  const moodByDate = React.useMemo(() => {
+  const moodByDate = useMemo(() => {
     if (!moodData.data) return {};
 
     return moodData.data.reduce<Record<string, MoodData>>((acc, item) => {
@@ -21,12 +21,12 @@ export function useCalendarIndex() {
     }, {});
   }, [moodData.data]);
 
-  const calendarDays = React.useMemo(
+  const calendarDays = useMemo(
     () => getCalendarDays(currentYear, currentMonth),
     [currentYear, currentMonth]
   );
 
-  const changeMonth = React.useCallback((offset: number) => {
+  const changeMonth = useCallback((offset: number) => {
     setCurrentMonth((prev) => {
       const newMonth = prev + offset;
       if (newMonth < 0) {
