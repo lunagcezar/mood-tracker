@@ -9,14 +9,15 @@ import '@/global.css';
 import { NAV_THEME } from '@/lib/theme';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { EllipsisVerticalIcon } from 'lucide-react-native';
+import { EllipsisVerticalIcon, LineChartIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { Text } from '@/components/ui/core/text';
 import { Icon } from '@/components/ui/core/icon';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { QUERY_CLIENT } from '@/constants/tanstack';
+import { View } from 'react-native';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -41,21 +42,30 @@ export default function RootLayout() {
 function HeaderButtons() {
   const { toggleColorScheme } = useColorScheme();
 
+  const pathname = usePathname();
+
   return (
-    <DropdownMenu className="web:mr-4">
-      <DropdownMenuTrigger>
-        <Icon as={EllipsisVerticalIcon} className="size-6" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="mt-5">
-        <DropdownMenuItem asChild>
-          <Link href="/settings">
-            <Text>Settings</Text>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem onPress={toggleColorScheme}>
-          <Text>Color scheme</Text>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <View className="flex-row items-center gap-4 web:mr-4">
+      {pathname !== '/stats' && (
+        <Link href="/stats">
+          <Icon as={LineChartIcon} className="size-6" />
+        </Link>
+      )}
+      <DropdownMenu className="">
+        <DropdownMenuTrigger>
+          <Icon as={EllipsisVerticalIcon} className="size-6" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="mt-5">
+          <DropdownMenuItem asChild>
+            <Link href="/settings">
+              <Text>Settings</Text>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem onPress={toggleColorScheme}>
+            <Text>Color scheme</Text>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </View>
   );
 }
