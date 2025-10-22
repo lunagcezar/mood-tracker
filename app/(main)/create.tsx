@@ -48,6 +48,7 @@ export default function MainCreate() {
         step={1}
         thumbTintColor={getMoodColor(dayRatingValue, colorScheme)}
         minimumTrackTintColor={getMoodColor(dayRatingValue, colorScheme)}
+        activeStepColor={getMoodColor(dayRatingValue, colorScheme)}
       />
       <Textarea
         placeholder="Type details about your day"
