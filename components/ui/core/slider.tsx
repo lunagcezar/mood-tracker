@@ -76,7 +76,7 @@ export function Slider({
                 className="z-50 h-2 w-2 rounded-full opacity-100"
                 style={{
                   backgroundColor:
-                    i === activeIndex
+                    i <= activeIndex
                       ? activeStepColor || (isDark ? '#fff' : '#000')
                       : isDark
                         ? '#525252'
