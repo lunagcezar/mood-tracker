@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, useColorScheme } from 'react-native';
 import CommunitySlider from '@react-native-community/slider';
 import { cn } from '../../../lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -42,12 +42,17 @@ export function Slider({
   size,
   ...props
 }: SliderProps) {
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
   return (
     <View className="gap-4">
       {label && <Text className="text-base text-neutral-800 dark:text-neutral-200">{label}</Text>}
       <CommunitySlider
         value={value}
         className={cn(sliderVariants({ variant, size }), className)}
+        thumbTintColor={props.thumbTintColor || (isDark ? '#60a5fa' : '#2563eb')}
+        minimumTrackTintColor={props.minimumTrackTintColor || (isDark ? '#60a5fa' : '#2563eb')}
+        maximumTrackTintColor={props.maximumTrackTintColor || (isDark ? '#374151' : '#d1d5db')}
         {...props}
       />
       {hasValue && <Text className="text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>}
