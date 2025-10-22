@@ -50,9 +50,9 @@ export function Slider({
       <CommunitySlider
         value={value}
         className={cn(sliderVariants({ variant, size }), className)}
-        thumbTintColor={props.thumbTintColor || (isDark ? '#60a5fa' : '#2563eb')}
-        minimumTrackTintColor={props.minimumTrackTintColor || (isDark ? '#60a5fa' : '#2563eb')}
-        maximumTrackTintColor={props.maximumTrackTintColor || (isDark ? '#374151' : '#d1d5db')}
+        thumbTintColor={props.thumbTintColor || (isDark ? '#ffffff' : '#000000')}
+        minimumTrackTintColor={props.minimumTrackTintColor || (isDark ? '#ffffff' : '#000000')}
+        maximumTrackTintColor={props.maximumTrackTintColor || (isDark ? '#d4d4d4' : '#a3a3a3')}
         {...props}
       />
       {hasValue && <Text className="text-sm text-neutral-500 dark:text-neutral-400">{value}</Text>}
