@@ -68,22 +68,19 @@ export function Slider({
         />
         {step && steps > 1 && (
           <View
-            className="absolute inset-x-0 top-1/2 z-[-1] mx-[0.95rem] -translate-y-1/2 flex-row items-center justify-between"
+            className="absolute inset-x-0 top-1/2 z-50 mx-[0.95rem] -translate-y-1/2 flex-row items-center justify-between rounded-full"
             pointerEvents="none">
             {Array.from({ length: steps }).map((_, i) => (
               <View
                 key={i}
+                className="z-50 h-2 w-2 rounded-full opacity-100"
                 style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: 4,
                   backgroundColor:
                     i === activeIndex
                       ? activeStepColor || (isDark ? '#fff' : '#000')
                       : isDark
-                        ? '#d4d4d4'
-                        : '#a3a3a3',
-                  opacity: i === activeIndex ? 1 : 0.25,
+                        ? '#525252'
+                        : '#d4d4d4',
                 }}
               />
             ))}
