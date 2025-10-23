@@ -27,7 +27,13 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
   );
 
   const saveEntry = async () => {
-    if (checkDateExists(selectedDateString)) {
+    // Check if date is in the future
+    if (selectedDateString > getTodayString()) {
+      Alert.alert('Invalid Date', 'You cannot create an entry for a future date.', [
+        { text: 'OK' },
+      ]);
+      return;
+    } else if (checkDateExists(selectedDateString)) {
       Alert.alert(
         'Entry Already Exists',
         'An entry for this date already exists. Please choose a different date or edit the existing entry.',

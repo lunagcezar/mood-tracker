@@ -73,6 +73,7 @@ export default function MainCreate() {
             selectedDate={selectedDateString}
             onDateSelect={handleDateSelect}
             onMonthChange={changeMonth}
+            disableFutureDates={true}
           />
         </DialogContent>
       </Dialog>

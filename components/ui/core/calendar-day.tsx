@@ -2,6 +2,7 @@ import { Text } from '@/components/ui/core/text';
 import { CalendarDay } from '@/types/date';
 import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import { getTodayString } from '@/lib/date';
 
 interface CalendarDayItemProps {
   item: CalendarDay;
@@ -11,25 +12,38 @@ interface CalendarDayItemProps {
   showRating?: boolean;
   rating?: number;
   backgroundColor?: string;
+  disableFutureDates?: boolean;
 }
 
 export const CalendarDayItem = memo<CalendarDayItemProps>(
-  ({ item, onPress, isSelected, hasEntry, showRating, rating, backgroundColor }) => {
+  ({
+    item,
+    onPress,
+    isSelected,
+    hasEntry,
+    showRating,
+    rating,
+    backgroundColor,
+    disableFutureDates,
+  }) => {
     if (item.day === null) {
       return <View className="m-0.5 aspect-square flex-1" />;
     }
 
+    const isFutureDate =
+      disableFutureDates && item.dateString && item.dateString > getTodayString();
+
     const handlePress = () => {
-      if (onPress && item.dateString) {
+      if (onPress && item.dateString && !isFutureDate) {
         onPress(item.dateString);
       }
     };
 
-    const Wrapper = onPress ? TouchableOpacity : View;
+    const Wrapper = onPress && !isFutureDate ? TouchableOpacity : View;
 
     return (
       <Wrapper
-        onPress={onPress ? handlePress : undefined}
+        onPress={onPress && !isFutureDate ? handlePress : undefined}
         className={`m-0.5 aspect-square flex-1 items-center justify-center rounded-lg border ${
           isSelected
             ? 'border-2 border-blue-500 bg-blue-100'
@@ -37,7 +51,10 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
               ? 'border-red-300 bg-red-50'
               : 'border-gray-300 bg-transparent'
         }`}
-        style={{ backgroundColor: backgroundColor || undefined }}>
+        style={[
+          { backgroundColor: backgroundColor || undefined },
+          isFutureDate && { opacity: 0.3 },
+        ].filter(Boolean)}>
         <Text className={`text-sm font-bold ${hasEntry && !backgroundColor ? 'text-red-600' : ''}`}>
           {item.day}
         </Text>
