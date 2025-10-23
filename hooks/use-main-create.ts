@@ -1,24 +1,23 @@
-import * as React from 'react';
 import { router } from 'expo-router';
 import { MoodData } from '@/types/mood';
 import { useEntriesByPrefix, useSaveEntry } from './use-tanstack';
-import { extractDateFromId } from '@/lib/date';
+import { extractDateFromId, getTodayString, stringToDate } from '@/lib/date';
 import { Alert } from 'react-native';
+import { useCallback, useState } from 'react';
 
 export function useMainCreate(initialRating: number = 1, initialDetails: string = '') {
-  const [dayRatingValue, setDayRatingValue] = React.useState(initialRating);
-  const [dayDetailsValue, setDayDetailsValue] = React.useState(initialDetails);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [dayRatingValue, setDayRatingValue] = useState(initialRating);
+  const [dayDetailsValue, setDayDetailsValue] = useState(initialDetails);
+  const [selectedDateString, setSelectedDateString] = useState(getTodayString());
 
   const moodData = useEntriesByPrefix<MoodData>('mood');
 
   const saveMutation = useSaveEntry<MoodData>('mood', () => router.back());
 
-  const checkDateExists = React.useCallback(
-    (date: Date) => {
+  const checkDateExists = useCallback(
+    (dateString: string) => {
       if (!moodData.data) return false;
 
-      const dateString = date.toISOString().slice(0, 10);
       return moodData.data.some((item) => {
         const itemDate = extractDateFromId(item.id);
         return itemDate === dateString;
@@ -28,7 +27,7 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
   );
 
   const saveEntry = async () => {
-    if (checkDateExists(selectedDate)) {
+    if (checkDateExists(selectedDateString)) {
       Alert.alert(
         'Entry Already Exists',
         'An entry for this date already exists. Please choose a different date or edit the existing entry.',
@@ -42,7 +41,7 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
       dayDetails: dayDetailsValue,
     };
 
-    saveMutation.mutate({ data: moodDataEntry, date: selectedDate });
+    saveMutation.mutate({ data: moodDataEntry, date: stringToDate(selectedDateString) });
   };
 
   return {
@@ -50,8 +49,8 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
     setDayRatingValue,
     dayDetailsValue,
     setDayDetailsValue,
-    selectedDate,
-    setSelectedDate,
+    selectedDateString,
+    setSelectedDateString,
     saveEntry,
     isSaving: saveMutation.isPending,
   };

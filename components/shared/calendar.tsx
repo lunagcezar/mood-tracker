@@ -13,7 +13,7 @@ type CalendarProps = {
   currentYear: number;
   moodByDate: Record<string, any>;
   selectedDate?: string | null;
-  onDateSelect?: (dateString: string | null) => void;
+  onDateSelect?: (dateString: string) => void;
   onMonthChange: (delta: number) => void;
   showMoodDetails?: boolean; // Show rating and color on calendar
 };

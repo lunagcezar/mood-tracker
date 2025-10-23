@@ -1,5 +1,5 @@
 import { useEntriesByPrefix } from '@/hooks/use-tanstack';
-import { extractDateFromId, getCalendarDays } from '@/lib/date';
+import { extractDateFromId, getCalendarDays, getTodayString } from '@/lib/date';
 import { MoodData } from '@/types/mood';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -8,7 +8,7 @@ export function useCalendarIndex() {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDateString, setSelectedDateString] = useState(getTodayString());
 
   const moodByDate = useMemo(() => {
     if (!moodData.data) return {};
@@ -46,11 +46,11 @@ export function useCalendarIndex() {
     month: 'long',
   });
 
-  const selectDate = useCallback((dateString: string | null) => {
-    setSelectedDate(dateString);
+  const selectDate = useCallback((dateString: string) => {
+    setSelectedDateString(dateString);
   }, []);
 
-  const selectedMood = selectedDate ? moodByDate[selectedDate] : null;
+  const selectedMood = selectedDateString ? moodByDate[selectedDateString] : null;
 
   return {
     moodByDate,
@@ -59,7 +59,7 @@ export function useCalendarIndex() {
     monthName,
     currentYear,
     currentMonth,
-    selectedDate,
+    selectedDateString,
     selectDate,
     selectedMood,
   };

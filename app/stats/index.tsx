@@ -6,6 +6,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { useCalendarIndex } from '@/hooks/use-calendar-index';
 import { Calendar } from '@/components/shared/calendar';
+import { formatDateString } from '@/lib/date';
 
 const SCREEN_OPTIONS = {
   title: 'Statistics',
@@ -18,12 +19,11 @@ export default function StatsIndex() {
     changeMonth,
     monthName,
     currentYear,
-    selectedDate,
+    selectedDateString,
     selectDate,
     selectedMood,
   } = useCalendarIndex();
 
-  // Enhanced render function with mood colors and ratings
   const enhancedMoodByDate = React.useMemo(() => {
     const enhanced: Record<string, any> = {};
     Object.entries(moodByDate).forEach(([date, mood]) => {
@@ -47,26 +47,21 @@ export default function StatsIndex() {
         monthName={monthName}
         currentYear={currentYear}
         moodByDate={enhancedMoodByDate}
-        selectedDate={selectedDate}
+        selectedDate={selectedDateString}
         onDateSelect={selectDate}
         onMonthChange={changeMonth}
         showMoodDetails={true}
       />
 
-      {selectedMood && selectedDate && (
+      {selectedMood && selectedDateString && (
         <View className="rounded-lg border border-gray-300 p-4">
           <Text className="mb-2 text-lg font-bold">
-            {(() => {
-              // Parse the date string correctly to avoid timezone issues
-              const [year, month, day] = selectedDate.split('-').map(Number);
-              const date = new Date(year, month - 1, day);
-              return date.toLocaleDateString('default', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              });
-            })()}
+            {formatDateString(selectedDateString, {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
           </Text>
           <View className="flex-row items-center gap-2">
             <Text className="text-base">Rating:</Text>

@@ -1,11 +1,11 @@
 import { Text } from '@/components/ui/core/text';
 import { CalendarDay } from '@/types/date';
+import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import * as React from 'react';
 
 interface CalendarDayItemProps {
   item: CalendarDay;
-  onPress?: (dateString: string | null) => void;
+  onPress?: (dateString: string) => void;
   isSelected?: boolean;
   hasEntry?: boolean;
   showRating?: boolean;
@@ -13,14 +13,14 @@ interface CalendarDayItemProps {
   backgroundColor?: string;
 }
 
-export const CalendarDayItem = React.memo<CalendarDayItemProps>(
+export const CalendarDayItem = memo<CalendarDayItemProps>(
   ({ item, onPress, isSelected, hasEntry, showRating, rating, backgroundColor }) => {
     if (item.day === null) {
       return <View className="m-0.5 aspect-square flex-1" />;
     }
 
     const handlePress = () => {
-      if (onPress) {
+      if (onPress && item.dateString) {
         onPress(item.dateString);
       }
     };

@@ -13,6 +13,7 @@ import { useCalendarIndex } from '@/hooks/use-calendar-index';
 import { Calendar } from '@/components/shared/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/core/dialog';
 import { Icon } from '@/components/ui/core/icon';
+import { formatDateString } from '@/lib/date';
 
 const SCREEN_OPTIONS = {
   title: 'Create a new Entry',
@@ -24,8 +25,8 @@ export default function MainCreate() {
     setDayRatingValue,
     dayDetailsValue,
     setDayDetailsValue,
-    selectedDate,
-    setSelectedDate,
+    selectedDateString,
+    setSelectedDateString,
     saveEntry,
     isSaving,
   } = useMainCreate();
@@ -38,8 +39,7 @@ export default function MainCreate() {
 
   const handleDateSelect = (dateString: string | null) => {
     if (dateString) {
-      const [year, month, day] = dateString.split('-').map(Number);
-      setSelectedDate(new Date(year, month - 1, day));
+      setSelectedDateString(dateString);
       setShowDatePicker(false);
     }
   };
@@ -52,7 +52,7 @@ export default function MainCreate() {
           <Button className="gap-4" variant="outline" size="fluid">
             <Icon as={CalendarIcon} className="size-6" />
             <Text className="text-lg font-semibold">
-              {selectedDate.toLocaleDateString('default', {
+              {formatDateString(selectedDateString, {
                 weekday: 'short',
                 year: 'numeric',
                 month: 'short',
@@ -70,7 +70,7 @@ export default function MainCreate() {
             monthName={monthName}
             currentYear={currentYear}
             moodByDate={moodByDate}
-            selectedDate={selectedDate.toISOString().slice(0, 10)}
+            selectedDate={selectedDateString}
             onDateSelect={handleDateSelect}
             onMonthChange={changeMonth}
           />
