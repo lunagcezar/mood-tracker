@@ -33,7 +33,13 @@ export function useSaveEntry<T extends TimestampedData>(
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: T) => saveEntry(prefix, data),
+    mutationFn: ({
+      data,
+      date,
+    }: {
+      data: Omit<T, 'id' | 'created_at' | 'updated_at'>;
+      date?: Date;
+    }) => saveEntry(prefix, data, date),
     onSuccess: (id) => {
       queryClient.invalidateQueries({ queryKey: [prefix, 'entries'] });
       onSuccess?.(id);

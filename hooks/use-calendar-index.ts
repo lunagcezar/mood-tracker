@@ -8,6 +8,7 @@ export function useCalendarIndex() {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const moodByDate = useMemo(() => {
     if (!moodData.data) return {};
@@ -45,6 +46,12 @@ export function useCalendarIndex() {
     month: 'long',
   });
 
+  const selectDate = useCallback((dateString: string | null) => {
+    setSelectedDate(dateString);
+  }, []);
+
+  const selectedMood = selectedDate ? moodByDate[selectedDate] : null;
+
   return {
     moodByDate,
     calendarDays,
@@ -52,5 +59,8 @@ export function useCalendarIndex() {
     monthName,
     currentYear,
     currentMonth,
+    selectedDate,
+    selectDate,
+    selectedMood,
   };
 }

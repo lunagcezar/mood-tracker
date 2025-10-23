@@ -4,12 +4,12 @@ import { saveEntry } from '@/lib/data';
 export function useSaveEntry<T extends object>(prefix: string, onSuccess?: (id: string) => void) {
   const [isSaving, setIsSaving] = React.useState(false);
 
-  const save = async (data: T): Promise<string | null> => {
+  const save = async (data: T, date?: Date): Promise<string | null> => {
     if (isSaving) return null;
 
     setIsSaving(true);
     try {
-      const id = await saveEntry(prefix, data);
+      const id = await saveEntry(prefix, data, date);
       onSuccess?.(id);
       return id;
     } catch (error) {

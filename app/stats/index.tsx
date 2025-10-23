@@ -1,73 +1,85 @@
 import { ScreenContainer } from '@/components/ui/core/screen-container';
 import { Text } from '@/components/ui/core/text';
 import { getMoodColor } from '@/constants/mood';
-import { WEEKDAYS } from '@/constants/date';
-import { CalendarDay } from '@/types/date';
 import { Stack } from 'expo-router';
 import * as React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { useCalendarIndex } from '@/hooks/use-calendar-index';
-import { Icon } from '@/components/ui/core/icon';
-import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from 'lucide-react-native';
+import { Calendar } from '@/components/shared/calendar';
 
 const SCREEN_OPTIONS = {
   title: 'Statistics',
 };
 
 export default function StatsIndex() {
-  const { moodByDate, calendarDays, changeMonth, monthName, currentYear } = useCalendarIndex();
+  const {
+    moodByDate,
+    calendarDays,
+    changeMonth,
+    monthName,
+    currentYear,
+    selectedDate,
+    selectDate,
+    selectedMood,
+  } = useCalendarIndex();
 
-  const renderDay = React.useCallback(
-    ({ item }: { item: CalendarDay }) => {
-      if (item.day === null) {
-        return <View className="m-0.5 aspect-square flex-1" />;
-      }
-
-      const mood = item.dateString ? moodByDate[item.dateString] : undefined;
-
-      return (
-        <View
-          className="m-0.5 aspect-square flex-1 items-center justify-center rounded-lg border"
-          style={{ backgroundColor: mood && getMoodColor(mood.dayRating) }}>
-          <Text className="text-sm font-bold">{item.day}</Text>
-          {mood && <Text className="text-xs font-bold text-black">{mood.dayRating}</Text>}
-        </View>
-      );
-    },
-    [moodByDate]
-  );
+  // Enhanced render function with mood colors and ratings
+  const enhancedMoodByDate = React.useMemo(() => {
+    const enhanced: Record<string, any> = {};
+    Object.entries(moodByDate).forEach(([date, mood]) => {
+      enhanced[date] = {
+        ...mood,
+        renderProps: {
+          showRating: true,
+          backgroundColor: getMoodColor(mood.dayRating),
+        },
+      };
+    });
+    return enhanced;
+  }, [moodByDate]);
 
   return (
     <ScreenContainer>
       <Stack.Screen options={SCREEN_OPTIONS} />
-      <View className="my-4 flex-row items-center justify-between">
-        <TouchableOpacity onPress={() => changeMonth(-1)} className="p-2">
-          <Icon as={ChevronLeftCircleIcon} className="size-8" />
-        </TouchableOpacity>
-        <View className="mx-3 flex-row gap-2">
-          <Text className="text-xl font-bold">{monthName}</Text>
-          <Text className="text-xl font-bold">{currentYear}</Text>
-        </View>
-        <TouchableOpacity onPress={() => changeMonth(1)} className="p-2">
-          <Icon as={ChevronRightCircleIcon} className="size-8" />
-        </TouchableOpacity>
-      </View>
 
-      <View className="mb-2 flex-row justify-between px-0.5">
-        {WEEKDAYS.map((d) => (
-          <Text key={d} className="flex-1 text-center text-xs font-bold text-gray-600">
-            {d}
-          </Text>
-        ))}
-      </View>
-
-      <FlatList
-        data={calendarDays}
-        numColumns={7}
-        keyExtractor={(_, idx) => `day-${idx}`}
-        renderItem={renderDay}
-        scrollEnabled={false}
+      <Calendar
+        calendarDays={calendarDays}
+        monthName={monthName}
+        currentYear={currentYear}
+        moodByDate={enhancedMoodByDate}
+        selectedDate={selectedDate}
+        onDateSelect={selectDate}
+        onMonthChange={changeMonth}
+        showMoodDetails={true}
       />
+
+      {selectedMood && selectedDate && (
+        <View className="rounded-lg border border-gray-300 p-4">
+          <Text className="mb-2 text-lg font-bold">
+            {(() => {
+              // Parse the date string correctly to avoid timezone issues
+              const [year, month, day] = selectedDate.split('-').map(Number);
+              const date = new Date(year, month - 1, day);
+              return date.toLocaleDateString('default', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              });
+            })()}
+          </Text>
+          <View className="flex-row items-center gap-2">
+            <Text className="text-base">Rating:</Text>
+            <Text className="text-xl font-bold">{selectedMood.dayRating}/10</Text>
+          </View>
+          {selectedMood.dayDetails && (
+            <View className="mt-3">
+              <Text className="mb-1 text-sm font-semibold text-gray-600">Notes:</Text>
+              <Text className="text-base">{selectedMood.dayDetails}</Text>
+            </View>
+          )}
+        </View>
+      )}
     </ScreenContainer>
   );
 }
