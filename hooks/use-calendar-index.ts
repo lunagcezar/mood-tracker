@@ -1,5 +1,6 @@
 import { useEntriesByPrefix } from '@/hooks/use-tanstack';
 import { extractDateFromId, getCalendarDays, getTodayString } from '@/lib/date';
+import { DateString } from '@/types/date';
 import { MoodData } from '@/types/mood';
 import { useCallback, useMemo, useState } from 'react';
 
@@ -46,7 +47,7 @@ export function useCalendarIndex() {
     month: 'long',
   });
 
-  const selectDate = useCallback((dateString: string) => {
+  const selectDate = useCallback((dateString: DateString) => {
     setSelectedDateString(dateString);
   }, []);
 

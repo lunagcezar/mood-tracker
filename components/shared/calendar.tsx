@@ -4,7 +4,7 @@ import { Icon } from '@/components/ui/core/icon';
 import { Text } from '@/components/ui/core/text';
 import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from 'lucide-react-native';
 import { WEEKDAYS } from '@/constants/date';
-import { CalendarDay } from '@/types/date';
+import { CalendarDay, DateString } from '@/types/date';
 import { CalendarDayItem } from '@/components/ui/core/calendar-day';
 
 type CalendarProps = {
@@ -13,10 +13,10 @@ type CalendarProps = {
   currentYear: number;
   moodByDate: Record<string, any>;
   selectedDate?: string | null;
-  onDateSelect?: (dateString: string) => void;
+  onDateSelect?: (dateString: DateString) => void;
   onMonthChange: (delta: number) => void;
-  showMoodDetails?: boolean; // Show rating and color on calendar
-  disableFutureDates?: boolean; // Disable future date selection
+  showMoodDetails?: boolean;
+  disableFutureDates?: boolean;
 };
 
 export function Calendar({

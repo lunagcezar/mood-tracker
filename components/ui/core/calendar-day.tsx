@@ -1,12 +1,12 @@
 import { Text } from '@/components/ui/core/text';
-import { CalendarDay } from '@/types/date';
+import { CalendarDay, DateString } from '@/types/date';
 import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { getTodayString } from '@/lib/date';
 
 interface CalendarDayItemProps {
   item: CalendarDay;
-  onPress?: (dateString: string) => void;
+  onPress?: (dateString: DateString) => void;
   isSelected?: boolean;
   hasEntry?: boolean;
   showRating?: boolean;

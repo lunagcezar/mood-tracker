@@ -14,6 +14,7 @@ import { Calendar } from '@/components/shared/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/core/dialog';
 import { Icon } from '@/components/ui/core/icon';
 import { formatDateString } from '@/lib/date';
+import { DateString } from '@/types/date';
 
 const SCREEN_OPTIONS = {
   title: 'Create a new Entry',
@@ -37,7 +38,7 @@ export default function MainCreate() {
 
   const colorScheme = useColorScheme();
 
-  const handleDateSelect = (dateString: string | null) => {
+  const handleDateSelect = (dateString: DateString | null) => {
     if (dateString) {
       setSelectedDateString(dateString);
       setShowDatePicker(false);

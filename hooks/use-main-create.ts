@@ -4,6 +4,7 @@ import { useEntriesByPrefix, useSaveEntry } from './use-tanstack';
 import { extractDateFromId, getTodayString, stringToDate } from '@/lib/date';
 import { Alert } from 'react-native';
 import { useCallback, useState } from 'react';
+import { DateString } from '@/types/date';
 
 export function useMainCreate(initialRating: number = 1, initialDetails: string = '') {
   const [dayRatingValue, setDayRatingValue] = useState(initialRating);
@@ -14,8 +15,8 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
 
   const saveMutation = useSaveEntry<MoodData>('mood', () => router.back());
 
-  const checkDateExists = useCallback(
-    (dateString: string) => {
+  const checkIfDateExists = useCallback(
+    (dateString: DateString) => {
       if (!moodData.data) return false;
 
       return moodData.data.some((item) => {
@@ -26,14 +27,16 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
     [moodData.data]
   );
 
+  const checkIfDateIsInFuture = (dateString: DateString) => dateString > getTodayString();
+
   const saveEntry = async () => {
     // Check if date is in the future
-    if (selectedDateString > getTodayString()) {
+    if (checkIfDateIsInFuture(selectedDateString)) {
       Alert.alert('Invalid Date', 'You cannot create an entry for a future date.', [
         { text: 'OK' },
       ]);
       return;
-    } else if (checkDateExists(selectedDateString)) {
+    } else if (checkIfDateExists(selectedDateString)) {
       Alert.alert(
         'Entry Already Exists',
         'An entry for this date already exists. Please choose a different date or edit the existing entry.',

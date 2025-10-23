@@ -1,4 +1,4 @@
-import { CalendarDay } from '@/types/date';
+import { CalendarDay, DateString } from '@/types/date';
 
 export function getCalendarDays(year: number, month: number): CalendarDay[] {
   const firstDay = new Date(year, month, 1);
@@ -13,7 +13,8 @@ export function getCalendarDays(year: number, month: number): CalendarDay[] {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const dateString =
+      `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}` as DateString;
     days.push({ day, dateString });
   }
 
@@ -25,34 +26,37 @@ export function getCalendarDays(year: number, month: number): CalendarDay[] {
   return days;
 }
 
-export function extractDateFromId(id: string): string | null {
+export function extractDateFromId(id: string): DateString | null {
   const idParts = id.split('-');
   if (idParts.length >= 2 && idParts[1].length >= 8) {
     const timestamp = idParts[1];
     const year = timestamp.slice(0, 4);
     const month = timestamp.slice(4, 6);
     const day = timestamp.slice(6, 8);
-    return `${year}-${month}-${day}`;
+    return `${year}-${month}-${day}` as DateString;
   }
   return null;
 }
 
-export function dateToString(date: Date): string {
+export function dateToString(date: Date): DateString {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}` as DateString;
 }
 
-export function stringToDate(dateString: string): Date {
+export function stringToDate(dateString: DateString): Date {
   const [year, month, day] = dateString.split('-').map(Number);
   return new Date(year, month - 1, day);
 }
 
-export function getTodayString(): string {
+export function getTodayString(): DateString {
   return dateToString(new Date());
 }
 
-export function formatDateString(dateString: string, options?: Intl.DateTimeFormatOptions): string {
+export function formatDateString(
+  dateString: DateString,
+  options?: Intl.DateTimeFormatOptions
+): string {
   return stringToDate(dateString).toLocaleDateString('default', options);
 }
