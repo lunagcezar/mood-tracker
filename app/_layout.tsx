@@ -11,7 +11,7 @@ import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Link, Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { EllipsisVerticalIcon, LineChartIcon } from 'lucide-react-native';
+import { CalendarIcon, EllipsisVerticalIcon, LineChartIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import { Text } from '@/components/ui/core/text';
 import { Icon } from '@/components/ui/core/icon';
@@ -46,9 +46,9 @@ function HeaderButtons() {
 
   return (
     <View className="flex-row items-center gap-4 web:mr-4">
-      {pathname !== '/stats' && (
-        <Link href="/stats">
-          <Icon as={LineChartIcon} className="size-6" />
+      {pathname !== '/calendar' && (
+        <Link href="/calendar">
+          <Icon as={CalendarIcon} className="size-6" />
         </Link>
       )}
       <DropdownMenu className="">

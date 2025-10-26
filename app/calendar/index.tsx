@@ -8,7 +8,7 @@ import { Calendar } from '@/components/ui/shared/calendar';
 import { MoodDetailsCard } from '@/components/ui/shared/mood-details-card';
 
 const SCREEN_OPTIONS = {
-  title: 'Statistics',
+  title: 'Calendar',
 };
 
 export default function StatsIndex() {
