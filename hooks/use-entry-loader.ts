@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
-import { MoodData } from '@/types/mood';
 import { useEntryById } from './use-tanstack';
+import { TimestampedData } from '@/types/data';
 
-type UseMoodEntryLoaderParams = {
+type UseEntryLoaderParams<T extends TimestampedData> = {
   entryId?: string;
   enabled: boolean;
-  onEntryLoaded?: (entry: MoodData) => void;
+  onEntryLoaded?: (entry: T) => void;
 };
 
-export function useMoodEntryLoader({ entryId, enabled, onEntryLoaded }: UseMoodEntryLoaderParams) {
+export function useEntryLoader<T extends TimestampedData>({
+  entryId,
+  enabled,
+  onEntryLoaded,
+}: UseEntryLoaderParams<T>) {
   const {
     data: entry,
     refetch,
     isLoading,
-  } = useEntryById<MoodData>(entryId || '', {
+  } = useEntryById<T>(entryId || '', {
     enabled: enabled && !!entryId,
   });
 
