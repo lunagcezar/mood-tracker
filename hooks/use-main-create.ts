@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { MoodData } from '@/types/mood';
-import { useEntriesByPrefix, useSaveEntry } from './use-tanstack';
+import { useEntriesByPrefix, useSaveEntry, useUpdateEntry } from './use-tanstack';
 import { extractDateFromId, getTodayString, stringToDate } from '@/lib/date';
 import { Alert } from 'react-native';
 import { useCallback, useState } from 'react';
@@ -14,6 +14,7 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
   const moodData = useEntriesByPrefix<MoodData>('mood');
 
   const saveMutation = useSaveEntry<MoodData>('mood', () => router.back());
+  const updateMutation = useUpdateEntry<MoodData>('mood', () => router.back());
 
   const checkIfDateExists = useCallback(
     (dateString: DateString) => {
@@ -53,6 +54,15 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
     saveMutation.mutate({ data: moodDataEntry, date: stringToDate(selectedDateString) });
   };
 
+  const editEntry = async (id: string) => {
+    const moodDataEntry = {
+      dayRating: dayRatingValue,
+      dayDetails: dayDetailsValue,
+    };
+
+    updateMutation.mutate({ id, data: moodDataEntry });
+  };
+
   return {
     dayRatingValue,
     setDayRatingValue,
@@ -61,6 +71,8 @@ export function useMainCreate(initialRating: number = 1, initialDetails: string 
     selectedDateString,
     setSelectedDateString,
     saveEntry,
+    editEntry,
     isSaving: saveMutation.isPending,
+    isUpdating: updateMutation.isPending,
   };
 }
