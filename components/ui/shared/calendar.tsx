@@ -65,9 +65,9 @@ export function Calendar({
   }
 
   return (
-    <View>
+    <View className="w-full items-center">
       {/* Month Navigation */}
-      <View className="flex-row items-center justify-between">
+      <View className="w-full flex-row items-center justify-between gap-6">
         <TouchableOpacity onPress={() => onMonthChange(-1)} className="p-2">
           <Icon as={ChevronLeftCircleIcon} className="size-8" />
         </TouchableOpacity>
@@ -81,10 +81,10 @@ export function Calendar({
       </View>
 
       {/* Weekday Headers */}
-      <View className="my-6 flex-row">
+      <View className="my-6 w-full flex-row">
         {WEEKDAYS.map((d) => (
           <View key={d} className="w-1/7">
-            <Text className="text-center text-sm font-bold text-neutral-500">{d}</Text>
+            <Text className="text-center text-xs font-bold text-neutral-500">{d}</Text>
           </View>
         ))}
       </View>
@@ -96,6 +96,7 @@ export function Calendar({
         keyExtractor={(_, idx) => `day-${idx}`}
         renderItem={renderDay}
         scrollEnabled={false}
+        className="w-full"
       />
     </View>
   );
