@@ -44,7 +44,7 @@ export function Calendar({
           hasEntry={hasEntry}
           showRating={showMoodDetails && hasEntry}
           rating={mood?.dayRating}
-          backgroundColor={showMoodDetails && mood ? mood.renderProps?.backgroundColor : undefined}
+          moodColor={showMoodDetails && mood ? mood.renderProps?.backgroundColor : undefined}
           disableFutureDates={disableFutureDates}
         />
       );

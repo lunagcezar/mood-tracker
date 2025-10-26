@@ -3,6 +3,7 @@ import { CalendarDay, DateString } from '@/types/date';
 import { memo } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { getTodayString } from '@/lib/date';
+import { cn } from '@/lib/utils';
 
 interface CalendarDayItemProps {
   item: CalendarDay;
@@ -11,21 +12,12 @@ interface CalendarDayItemProps {
   hasEntry?: boolean;
   showRating?: boolean;
   rating?: number;
-  backgroundColor?: string;
+  moodColor?: string;
   disableFutureDates?: boolean;
 }
 
 export const CalendarDayItem = memo<CalendarDayItemProps>(
-  ({
-    item,
-    onPress,
-    isSelected,
-    hasEntry,
-    showRating,
-    rating,
-    backgroundColor,
-    disableFutureDates,
-  }) => {
+  ({ item, onPress, isSelected, hasEntry, showRating, rating, moodColor, disableFutureDates }) => {
     if (item.day === null) {
       return <View className="w-1/7 aspect-square" />;
     }
@@ -44,22 +36,24 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
     return (
       <Wrapper
         onPress={onPress && !isFutureDate ? handlePress : undefined}
-        className={`w-1/7 aspect-square items-center justify-center border ${
-          isSelected
-            ? 'border-2 border-blue-500 bg-blue-100'
-            : hasEntry
-              ? 'border-red-300 bg-red-50'
-              : 'border-gray-300 bg-transparent'
-        }`}
-        style={[
-          { backgroundColor: backgroundColor || undefined },
-          isFutureDate && { opacity: 0.3 },
-        ].filter(Boolean)}>
-        <Text className={`text-sm font-bold ${hasEntry && !backgroundColor ? 'text-red-600' : ''}`}>
+        className={cn(
+          'w-1/7 aspect-square items-center justify-center gap-0.5 bg-transparent',
+          isSelected && 'border-2 border-blue-500'
+        )}
+        style={isFutureDate && { opacity: 0.3 }}>
+        <Text className={`text-sm font-bold ${hasEntry && !moodColor ? 'text-red-600' : ''}`}>
           {item.day}
         </Text>
-        {showRating && rating !== undefined && (
-          <Text className="text-xs font-bold text-black">{rating}</Text>
+        {showRating && rating !== undefined ? (
+          <Text
+            style={{
+              color: moodColor,
+            }}
+            className="text-xs font-bold text-black">
+            {rating}/10
+          </Text>
+        ) : (
+          <Text className="text-xs opacity-50">-</Text>
         )}
       </Wrapper>
     );
