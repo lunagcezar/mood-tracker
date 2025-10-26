@@ -44,15 +44,19 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
         <Text className={`text-sm font-bold ${hasEntry && !moodColor ? 'text-red-600' : ''}`}>
           {item.day}
         </Text>
-        {showRating && rating !== undefined && (
-          <Text
-            style={{
-              color: moodColor,
-            }}
-            className="text-xs font-bold text-black">
-            {rating}/10
-          </Text>
-        )}
+        {showRating ? (
+          typeof rating !== 'undefined' ? (
+            <Text
+              style={{
+                color: moodColor,
+              }}
+              className="text-xs font-bold text-black">
+              {rating}/10
+            </Text>
+          ) : (
+            <Text className="text-xs opacity-50">-</Text>
+          )
+        ) : null}
       </Wrapper>
     );
   }

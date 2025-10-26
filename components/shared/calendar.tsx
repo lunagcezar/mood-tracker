@@ -15,7 +15,7 @@ type CalendarProps = {
   selectedDate?: string | null;
   onDateSelect?: (dateString: DateString) => void;
   onMonthChange: (delta: number) => void;
-  showMoodDetails?: boolean;
+  showRating?: boolean;
   disableFutureDates?: boolean;
 };
 
@@ -27,7 +27,7 @@ export function Calendar({
   selectedDate,
   onDateSelect,
   onMonthChange,
-  showMoodDetails = false,
+  showRating = false,
   disableFutureDates = false,
 }: CalendarProps) {
   const renderDay = React.useCallback(
@@ -42,14 +42,14 @@ export function Calendar({
           onPress={onDateSelect}
           isSelected={isSelected}
           hasEntry={hasEntry}
-          showRating={showMoodDetails && hasEntry}
+          showRating={showRating}
           rating={mood?.dayRating}
-          moodColor={showMoodDetails && mood ? mood.renderProps?.backgroundColor : undefined}
+          moodColor={showRating && mood ? mood.renderProps?.backgroundColor : undefined}
           disableFutureDates={disableFutureDates}
         />
       );
     },
-    [moodByDate, selectedDate, onDateSelect, showMoodDetails, disableFutureDates]
+    [moodByDate, selectedDate, onDateSelect, showRating, disableFutureDates]
   );
 
   return (

@@ -50,7 +50,7 @@ export default function StatsIndex() {
         selectedDate={selectedDateString}
         onDateSelect={selectDate}
         onMonthChange={changeMonth}
-        showMoodDetails={true}
+        showRating
       />
 
       {selectedMood && selectedDateString && (
