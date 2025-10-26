@@ -1,17 +1,43 @@
 import { router } from 'expo-router';
 import { MoodData } from '@/types/mood';
-import { useEntriesByPrefix, useSaveEntry, useUpdateEntry } from './use-tanstack';
+import { useEntriesByPrefix, useSaveEntry, useUpdateEntry, useEntryById } from './use-tanstack';
 import { extractDateFromId, getTodayString, stringToDate } from '@/lib/date';
 import { Alert } from 'react-native';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { DateString } from '@/types/date';
 
-export function useMain(initialRating: number = 1, initialDetails: string = '') {
-  const [dayRatingValue, setDayRatingValue] = useState(initialRating);
-  const [dayDetailsValue, setDayDetailsValue] = useState(initialDetails);
+type UseMainParams = {
+  mode?: 'create' | 'edit';
+  entryId?: string;
+};
+
+export function useMain({ mode = 'create', entryId }: UseMainParams = {}) {
+  const [dayRatingValue, setDayRatingValue] = useState(1);
+  const [dayDetailsValue, setDayDetailsValue] = useState('');
   const [selectedDateString, setSelectedDateString] = useState(getTodayString());
 
   const moodData = useEntriesByPrefix<MoodData>('mood');
+
+  const { data: existingEntry, refetch } = useEntryById<MoodData>(entryId || '', {
+    enabled: mode === 'edit' && !!entryId,
+  });
+
+  useEffect(() => {
+    if (mode === 'edit' && entryId) {
+      refetch();
+    }
+  }, [mode, entryId, refetch]);
+
+  useEffect(() => {
+    if (mode === 'edit' && existingEntry) {
+      setDayRatingValue(existingEntry.dayRating);
+      setDayDetailsValue(existingEntry.dayDetails || '');
+      const dateString = extractDateFromId(existingEntry.id);
+      if (dateString) {
+        setSelectedDateString(dateString);
+      }
+    }
+  }, [mode, existingEntry]);
 
   const saveMutation = useSaveEntry<MoodData>('mood', () => router.back());
   const updateMutation = useUpdateEntry<MoodData>('mood', () => router.back());
@@ -31,7 +57,6 @@ export function useMain(initialRating: number = 1, initialDetails: string = '') 
   const checkIfDateIsInFuture = (dateString: DateString) => dateString > getTodayString();
 
   const saveEntry = async () => {
-    // Check if date is in the future
     if (checkIfDateIsInFuture(selectedDateString)) {
       Alert.alert('Invalid Date', 'You cannot create an entry for a future date.', [
         { text: 'OK' },
@@ -63,6 +88,14 @@ export function useMain(initialRating: number = 1, initialDetails: string = '') 
     updateMutation.mutate({ id, data: moodDataEntry });
   };
 
+  const handleSubmit = () => {
+    if (mode === 'create') {
+      saveEntry();
+    } else if (entryId) {
+      editEntry(entryId);
+    }
+  };
+
   return {
     dayRatingValue,
     setDayRatingValue,
@@ -72,6 +105,9 @@ export function useMain(initialRating: number = 1, initialDetails: string = '') 
     setSelectedDateString,
     saveEntry,
     editEntry,
+    handleSubmit,
+    existingEntry,
+    isLoading: mode === 'edit' && !existingEntry,
     isSaving: saveMutation.isPending,
     isUpdating: updateMutation.isPending,
   };

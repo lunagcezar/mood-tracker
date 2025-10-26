@@ -7,7 +7,7 @@ import { useColorScheme, View } from 'react-native';
 import { getMoodColor, getMoodLabel, MAX_MOOD_RATING, MIN_MOOD_RATING } from '@/constants/mood';
 import { CalendarIcon, CheckIcon } from 'lucide-react-native';
 import { useCalendarIndex } from '@/hooks/use-calendar-index';
-import { Calendar } from '@/components/shared/calendar';
+import { Calendar } from '@/components/ui/shared/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/core/dialog';
 import { Icon } from '@/components/ui/core/icon';
 import { formatDateString } from '@/lib/date';
@@ -28,23 +28,14 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
     setDayDetailsValue,
     selectedDateString,
     setSelectedDateString,
-    saveEntry,
-    editEntry,
-  } = useMain();
+    handleSubmit,
+  } = useMain({ mode, entryId });
 
   const [showDatePicker, setShowDatePicker] = React.useState(false);
 
   const { moodByDate, calendarDays, changeMonth, monthName, currentYear } = useCalendarIndex();
 
   const colorScheme = useColorScheme();
-
-  const handleDBOperation = () => {
-    if (mode === 'create') {
-      saveEntry();
-    } else if (entryId) {
-      editEntry(entryId);
-    }
-  };
 
   const handleDateSelect = (dateString: DateString | null) => {
     if (dateString) {
@@ -115,7 +106,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
         value={dayDetailsValue}
         onChangeText={setDayDetailsValue}
       />
-      <FAB onPress={handleDBOperation} icon={CheckIcon} />
+      <FAB onPress={handleSubmit} icon={CheckIcon} />
     </>
   );
 }

@@ -55,10 +55,19 @@ export function Calendar({
     [moodByDate, selectedDate, onDateSelect, showRating, disableFutureDates]
   );
 
+  let daysToRender = calendarDays;
+
+  if (calendarDays.length >= 7) {
+    const lastWeek = calendarDays.slice(-7);
+    if (lastWeek.every((day) => day.day === null)) {
+      daysToRender = calendarDays.slice(0, -7);
+    }
+  }
+
   return (
     <View>
       {/* Month Navigation */}
-      <View className="mb-4 flex-row items-center justify-between">
+      <View className="flex-row items-center justify-between">
         <TouchableOpacity onPress={() => onMonthChange(-1)} className="p-2">
           <Icon as={ChevronLeftCircleIcon} className="size-8" />
         </TouchableOpacity>
@@ -72,7 +81,7 @@ export function Calendar({
       </View>
 
       {/* Weekday Headers */}
-      <View className="mb-6 flex-row">
+      <View className="my-6 flex-row">
         {WEEKDAYS.map((d) => (
           <View key={d} className="w-1/7">
             <Text className="text-center text-sm font-bold text-neutral-500">{d}</Text>
@@ -82,7 +91,7 @@ export function Calendar({
 
       {/* Calendar Grid */}
       <FlatList
-        data={calendarDays}
+        data={daysToRender}
         numColumns={7}
         keyExtractor={(_, idx) => `day-${idx}`}
         renderItem={renderDay}
