@@ -50,6 +50,9 @@ module.exports = {
       borderWidth: {
         hairline: hairlineWidth(),
       },
+      width: {
+        '1/7': '14.285714%',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },

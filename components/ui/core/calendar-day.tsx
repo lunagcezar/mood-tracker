@@ -27,7 +27,7 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
     disableFutureDates,
   }) => {
     if (item.day === null) {
-      return <View className="m-0.5 aspect-square flex-1" />;
+      return <View className="w-1/7 aspect-square" />;
     }
 
     const isFutureDate =
@@ -44,7 +44,7 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
     return (
       <Wrapper
         onPress={onPress && !isFutureDate ? handlePress : undefined}
-        className={`m-0.5 aspect-square flex-1 items-center justify-center rounded-lg border ${
+        className={`w-1/7 aspect-square items-center justify-center border ${
           isSelected
             ? 'border-2 border-blue-500 bg-blue-100'
             : hasEntry

@@ -69,11 +69,11 @@ export function Calendar({
       </View>
 
       {/* Weekday Headers */}
-      <View className="mb-2 flex-row justify-between px-0.5">
+      <View className="mb-6 flex-row">
         {WEEKDAYS.map((d) => (
-          <Text key={d} className="flex-1 text-center text-xs font-bold text-gray-600">
-            {d}
-          </Text>
+          <View key={d} className="w-1/7">
+            <Text className="text-center text-sm font-bold text-neutral-500">{d}</Text>
+          </View>
         ))}
       </View>
 
