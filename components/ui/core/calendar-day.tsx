@@ -14,10 +14,21 @@ interface CalendarDayItemProps {
   rating?: number;
   moodColor?: string;
   disableFutureDates?: boolean;
+  disableDatesWithEntry?: boolean;
 }
 
 export const CalendarDayItem = memo<CalendarDayItemProps>(
-  ({ item, onPress, isSelected, hasEntry, showRating, rating, moodColor, disableFutureDates }) => {
+  ({
+    item,
+    onPress,
+    isSelected,
+    hasEntry,
+    showRating,
+    rating,
+    moodColor,
+    disableFutureDates = false,
+    disableDatesWithEntry = false,
+  }) => {
     if (item.day === null) {
       return <View className="w-1/7 aspect-square" />;
     }
@@ -31,17 +42,20 @@ export const CalendarDayItem = memo<CalendarDayItemProps>(
       }
     };
 
-    const Wrapper = onPress && !isFutureDate ? TouchableOpacity : View;
+    const isDisabled = isFutureDate || (hasEntry && disableDatesWithEntry);
+
+    const Wrapper = onPress && !isDisabled ? TouchableOpacity : View;
 
     return (
       <Wrapper
-        onPress={onPress && !isFutureDate ? handlePress : undefined}
+        onPress={onPress && !isDisabled ? handlePress : undefined}
         className={cn(
           'w-1/7 aspect-square items-center justify-center gap-0.5 bg-transparent',
           isSelected && 'border-2 border-blue-500'
         )}
-        style={isFutureDate && { opacity: 0.3 }}>
-        <Text className={`text-sm font-bold ${hasEntry && !moodColor ? 'text-red-600' : ''}`}>
+        style={isDisabled && { opacity: 0.3 }}>
+        <Text
+          className={`text-sm font-bold ${hasEntry && !moodColor ? 'text-red-600 dark:text-red-300' : ''}`}>
           {item.day}
         </Text>
         {showRating ? (

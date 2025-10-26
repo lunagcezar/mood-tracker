@@ -74,7 +74,8 @@ export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
             selectedDate={selectedDateString}
             onDateSelect={handleDateSelect}
             onMonthChange={changeMonth}
-            disableFutureDates={true}
+            disableFutureDates
+            disableDatesWithEntry
           />
         </DialogContent>
       </Dialog>
