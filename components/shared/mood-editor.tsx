@@ -17,9 +17,10 @@ import { useMain } from '@/hooks/use-main';
 
 type MoodEditorProps = {
   mode?: 'create' | 'edit';
+  entryId?: string;
 };
 
-export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
+export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps) {
   const {
     dayRatingValue,
     setDayRatingValue,
@@ -37,7 +38,13 @@ export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
 
   const colorScheme = useColorScheme();
 
-  const DBOperation = () => (mode === 'create' ? saveEntry : editEntry);
+  const handleDBOperation = () => {
+    if (mode === 'create') {
+      saveEntry();
+    } else if (entryId) {
+      editEntry(entryId);
+    }
+  };
 
   const handleDateSelect = (dateString: DateString | null) => {
     if (dateString) {
@@ -47,40 +54,42 @@ export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
   };
 
   return (
-    <View className="h-full gap-8">
-      <Dialog onOpenChange={setShowDatePicker} open={showDatePicker}>
-        <DialogTrigger asChild>
-          <Button className="gap-4" variant="outline" size="fluid">
-            <Icon as={CalendarIcon} className="size-6" />
-            <Text className="text-lg font-semibold">
-              {formatDateString(selectedDateString, {
-                weekday: 'short',
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-              })}
-            </Text>
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <Text>Choose a date</Text>
-          </DialogHeader>
-          <Calendar
-            calendarDays={calendarDays}
-            monthName={monthName}
-            currentYear={currentYear}
-            moodByDate={moodByDate}
-            selectedDate={selectedDateString}
-            onDateSelect={handleDateSelect}
-            onMonthChange={changeMonth}
-            disableFutureDates
-            disableDatesWithEntry
-          />
-        </DialogContent>
-      </Dialog>
+    <>
+      {mode === 'create' && (
+        <Dialog onOpenChange={setShowDatePicker} open={showDatePicker}>
+          <DialogTrigger asChild>
+            <Button className="gap-4" variant="outline" size="fluid">
+              <Icon as={CalendarIcon} className="size-6" />
+              <Text className="text-lg font-semibold">
+                {formatDateString(selectedDateString, {
+                  weekday: 'short',
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </Text>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <Text>Choose a date</Text>
+            </DialogHeader>
+            <Calendar
+              calendarDays={calendarDays}
+              monthName={monthName}
+              currentYear={currentYear}
+              moodByDate={moodByDate}
+              selectedDate={selectedDateString}
+              onDateSelect={handleDateSelect}
+              onMonthChange={changeMonth}
+              disableFutureDates
+              disableDatesWithEntry
+            />
+          </DialogContent>
+        </Dialog>
+      )}
       <Text variant="h3" className="text-center">
-        How are you feeling today?
+        How are you feeling?
       </Text>
       <View className="gap-4">
         <Text variant="h1" className="text-center">
@@ -106,7 +115,7 @@ export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
         value={dayDetailsValue}
         onChangeText={setDayDetailsValue}
       />
-      <FAB onPress={DBOperation} icon={CheckIcon} />
-    </View>
+      <FAB onPress={handleDBOperation} icon={CheckIcon} />
+    </>
   );
 }
