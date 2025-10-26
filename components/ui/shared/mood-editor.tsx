@@ -13,7 +13,7 @@ import { Icon } from '@/components/ui/core/icon';
 import { formatDateString } from '@/lib/date';
 import { DateString } from '@/types/date';
 import FAB from '@/components/ui/core/fab';
-import { useMain } from '@/hooks/use-main';
+import { useMoodEditor } from '@/hooks/use-mood-editor';
 
 type MoodEditorProps = {
   mode?: 'create' | 'edit';
@@ -22,14 +22,14 @@ type MoodEditorProps = {
 
 export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps) {
   const {
-    dayRatingValue,
-    setDayRatingValue,
-    dayDetailsValue,
-    setDayDetailsValue,
+    dayRating,
+    setDayRating,
+    dayDetails,
+    setDayDetails,
     selectedDateString,
     setSelectedDateString,
     handleSubmit,
-  } = useMain({ mode, entryId });
+  } = useMoodEditor({ mode, entryId });
 
   const [showDatePicker, setShowDatePicker] = React.useState(false);
 
@@ -70,7 +70,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
               monthName={monthName}
               currentYear={currentYear}
               moodByDate={moodByDate}
-              selectedDate={selectedDateString}
+              selectedDateString={selectedDateString}
               onDateSelect={handleDateSelect}
               onMonthChange={changeMonth}
               disableFutureDates
@@ -84,27 +84,27 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
       </Text>
       <View className="gap-4">
         <Text variant="h1" className="text-center">
-          {dayRatingValue}
+          {dayRating}
         </Text>
         <Text variant="h4" className="text-center">
-          {getMoodLabel(dayRatingValue)}
+          {getMoodLabel(dayRating)}
         </Text>
       </View>
 
       <Slider
-        value={dayRatingValue}
-        onValueChange={setDayRatingValue}
+        value={dayRating}
+        onValueChange={setDayRating}
         maximumValue={MAX_MOOD_RATING}
         minimumValue={MIN_MOOD_RATING}
         step={1}
-        thumbTintColor={getMoodColor(dayRatingValue, colorScheme)}
-        minimumTrackTintColor={getMoodColor(dayRatingValue, colorScheme)}
-        activeStepColor={getMoodColor(dayRatingValue, colorScheme)}
+        thumbTintColor={getMoodColor(dayRating, colorScheme)}
+        minimumTrackTintColor={getMoodColor(dayRating, colorScheme)}
+        activeStepColor={getMoodColor(dayRating, colorScheme)}
       />
       <Textarea
         placeholder="Type details about your day"
-        value={dayDetailsValue}
-        onChangeText={setDayDetailsValue}
+        value={dayDetails}
+        onChangeText={setDayDetails}
       />
       <FAB onPress={handleSubmit} icon={CheckIcon} />
     </>

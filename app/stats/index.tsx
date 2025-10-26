@@ -46,7 +46,7 @@ export default function StatsIndex() {
         monthName={monthName}
         currentYear={currentYear}
         moodByDate={enhancedMoodByDate}
-        selectedDate={selectedDateString}
+        selectedDateString={selectedDateString}
         onDateSelect={selectDate}
         onMonthChange={changeMonth}
         showRating

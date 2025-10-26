@@ -12,7 +12,7 @@ type CalendarProps = {
   monthName: string;
   currentYear: number;
   moodByDate: Record<string, any>;
-  selectedDate?: string | null;
+  selectedDateString?: DateString | null;
   onDateSelect?: (dateString: DateString) => void;
   onMonthChange: (delta: number) => void;
   showRating?: boolean;
@@ -25,7 +25,7 @@ export function Calendar({
   monthName,
   currentYear,
   moodByDate,
-  selectedDate,
+  selectedDateString,
   onDateSelect,
   onMonthChange,
   showRating = false,
@@ -36,7 +36,7 @@ export function Calendar({
     ({ item }: { item: CalendarDay }) => {
       const mood = item.dateString ? moodByDate[item.dateString] : undefined;
       const hasEntry = !!mood;
-      const isSelected = item.dateString === selectedDate;
+      const isSelected = item.dateString === selectedDateString;
 
       return (
         <CalendarDayItem
@@ -52,7 +52,7 @@ export function Calendar({
         />
       );
     },
-    [moodByDate, selectedDate, onDateSelect, showRating, disableFutureDates]
+    [moodByDate, selectedDateString, onDateSelect, showRating, disableFutureDates]
   );
 
   let daysToRender = calendarDays;
