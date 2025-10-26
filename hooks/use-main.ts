@@ -6,7 +6,7 @@ import { Alert } from 'react-native';
 import { useCallback, useState } from 'react';
 import { DateString } from '@/types/date';
 
-export function useMainCreate(initialRating: number = 1, initialDetails: string = '') {
+export function useMain(initialRating: number = 1, initialDetails: string = '') {
   const [dayRatingValue, setDayRatingValue] = useState(initialRating);
   const [dayDetailsValue, setDayDetailsValue] = useState(initialDetails);
   const [selectedDateString, setSelectedDateString] = useState(getTodayString());

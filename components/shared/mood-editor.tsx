@@ -1,7 +1,6 @@
 import { Slider } from '@/components/ui/core/slider';
 import * as React from 'react';
 import { Textarea } from '@/components/ui/core/textarea';
-import { useMainCreate } from '@/hooks/use-main-create';
 import { Button } from '@/components/ui/core/button';
 import { Text } from '@/components/ui/core/text';
 import { useColorScheme, View } from 'react-native';
@@ -14,6 +13,7 @@ import { Icon } from '@/components/ui/core/icon';
 import { formatDateString } from '@/lib/date';
 import { DateString } from '@/types/date';
 import FAB from '@/components/ui/core/fab';
+import { useMain } from '@/hooks/use-main';
 
 type MoodEditorProps = {
   mode?: 'create' | 'edit';
@@ -29,7 +29,7 @@ export default function MoodEditor({ mode = 'create' }: MoodEditorProps) {
     setSelectedDateString,
     saveEntry,
     editEntry,
-  } = useMainCreate();
+  } = useMain();
 
   const [showDatePicker, setShowDatePicker] = React.useState(false);
 
