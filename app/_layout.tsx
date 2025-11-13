@@ -1,9 +1,3 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/core/dropdown-menu';
 import '@/global.css';
 
 import { NAV_THEME } from '@/lib/theme';
