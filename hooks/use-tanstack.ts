@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
 import { getAllEntriesByPrefix, getEntryById, updateEntryById, deleteEntryById } from '@/lib/crud';
 import { saveEntry } from '@/lib/data';
-import { TimestampedData } from '@/types/data';
+import { TimestampedData } from '@/types/settings';
 
 export function useEntriesByPrefix<T extends TimestampedData>(
   prefix: string,

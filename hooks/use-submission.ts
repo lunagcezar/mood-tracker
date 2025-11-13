@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useSaveEntry, useUpdateEntry } from './use-tanstack';
 import { stringToDate } from '@/lib/date';
 import { DateString } from '@/types/date';
-import { TimestampedData } from '@/types/data';
+import { TimestampedData } from '@/types/settings';
 
 type UseSubmissionProps = {
   prefix: string;

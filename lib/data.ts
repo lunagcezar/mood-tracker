@@ -1,4 +1,4 @@
-import { TimestampedData } from '@/types/data';
+import { TimestampedData } from '@/types/settings';
 import { setItemWithTimestamps } from './async-storage-timestamp';
 import { generateId } from './string';
 

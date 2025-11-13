@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useEntryById } from './use-tanstack';
-import { TimestampedData } from '@/types/data';
+import { TimestampedData } from '@/types/settings';
 
 type UseEntryLoaderParams<T extends TimestampedData> = {
   entryId?: string;

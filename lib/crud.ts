@@ -1,4 +1,4 @@
-import { TimestampedData } from '@/types/data';
+import { TimestampedData } from '@/types/settings';
 import { getAllKeys, getItem, removeItem } from './async-storage';
 import { updateItemWithTimestamp } from './async-storage-timestamp';
 
