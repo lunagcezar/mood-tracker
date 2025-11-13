@@ -11,9 +11,8 @@ import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Link, Stack, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { CalendarIcon, EllipsisVerticalIcon, LineChartIcon } from 'lucide-react-native';
+import { CalendarIcon, SettingsIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
-import { Text } from '@/components/ui/core/text';
 import { Icon } from '@/components/ui/core/icon';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { QUERY_CLIENT } from '@/constants/tanstack';
@@ -46,26 +45,33 @@ function HeaderButtons() {
 
   return (
     <View className="flex-row items-center gap-4 web:mr-4">
-      {pathname !== '/calendar' && (
-        <Link href="/calendar">
-          <Icon as={CalendarIcon} className="size-6" />
-        </Link>
+      {pathname === '/' && (
+        <>
+          <Link href="/calendar">
+            <Icon as={CalendarIcon} className="size-6 web:size-5" />
+          </Link>
+          <Link href="/settings">
+            <Icon as={SettingsIcon} className="size-6 web:size-5" />
+          </Link>
+        </>
       )}
-      <DropdownMenu className="">
-        <DropdownMenuTrigger>
-          <Icon as={EllipsisVerticalIcon} className="size-6" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="mt-5">
-          <DropdownMenuItem asChild>
-            <Link href="/settings">
-              <Text>Settings</Text>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem onPress={toggleColorScheme}>
-            <Text>Color scheme</Text>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      {/*
+        <DropdownMenu className="">
+          <DropdownMenuTrigger>
+            <Icon as={EllipsisVerticalIcon} className="size-6" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mt-5">
+            <DropdownMenuItem asChild>
+              <Link href="/settings">
+                <Text>Settings</Text>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onPress={toggleColorScheme}>
+              <Text>Color scheme</Text>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        */}
     </View>
   );
 }
