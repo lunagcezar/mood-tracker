@@ -16,3 +16,11 @@ export type Settings = {
   colorScheme: ColorScheme;
   language: Language;
 };
+
+export type SettingsContext = {
+  settings: Settings;
+  updateColorScheme: (colorScheme: ColorScheme) => Promise<void>;
+  updateLanguage: (language: Language) => Promise<void>;
+  effectiveColorScheme: 'light' | 'dark';
+  effectiveLanguage: 'en' | 'pt-BR';
+};
