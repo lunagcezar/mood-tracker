@@ -4,25 +4,25 @@ import type { Settings } from '@/types/settings';
 import type { ColorScheme, Language } from '@/types/settings';
 import { NativeModules, Platform } from 'react-native';
 
-export function getColorSchemeLabel(scheme: ColorScheme): string {
+export function getColorSchemeLabelKey(scheme: ColorScheme): string {
   switch (scheme) {
     case 'light':
-      return 'Light';
+      return 'settings.light';
     case 'dark':
-      return 'Dark';
+      return 'settings.dark';
     case 'system':
-      return 'Use system settings';
+      return 'settings.useSystemSettings';
   }
 }
 
-export function getLanguageLabel(lang: Language): string {
+export function getLanguageLabelKey(lang: Language): string {
   switch (lang) {
     case 'en':
-      return 'English';
+      return 'settings.english';
     case 'pt-BR':
-      return 'Portuguese (Brazil)';
+      return 'settings.portugueseBrazil';
     case 'system':
-      return 'Use system settings';
+      return 'settings.useSystemSettings';
   }
 }
 

@@ -11,17 +11,18 @@ export enum MoodRating {
   PERFECT = 10,
 }
 
-export const MOOD_LABELS: Record<MoodRating, string> = {
-  [MoodRating.EXTREMELY_SAD]: 'Extremely Sad',
-  [MoodRating.VERY_SAD]: 'Very Sad',
-  [MoodRating.SAD]: 'Sad',
-  [MoodRating.SOMEWHAT_SAD]: 'Somewhat Sad',
-  [MoodRating.AVERAGE]: 'Average',
-  [MoodRating.SOMEWHAT_HAPPY]: 'Somewhat Happy',
-  [MoodRating.HAPPY]: 'Happy',
-  [MoodRating.VERY_HAPPY]: 'Very Happy',
-  [MoodRating.EXTREMELY_HAPPY]: 'Extremely Happy',
-  [MoodRating.PERFECT]: 'Perfect',
+// Mapping for translation keys
+export const MOOD_LABEL_KEYS: Record<MoodRating, string> = {
+  [MoodRating.EXTREMELY_SAD]: 'mood.extremelySad',
+  [MoodRating.VERY_SAD]: 'mood.verySad',
+  [MoodRating.SAD]: 'mood.sad',
+  [MoodRating.SOMEWHAT_SAD]: 'mood.somewhatSad',
+  [MoodRating.AVERAGE]: 'mood.average',
+  [MoodRating.SOMEWHAT_HAPPY]: 'mood.somewhatHappy',
+  [MoodRating.HAPPY]: 'mood.happy',
+  [MoodRating.VERY_HAPPY]: 'mood.veryHappy',
+  [MoodRating.EXTREMELY_HAPPY]: 'mood.extremelyHappy',
+  [MoodRating.PERFECT]: 'mood.perfect',
 };
 
 export const MOOD_COLORS_LIGHT: Record<MoodRating, string> = {
@@ -57,8 +58,8 @@ export const MOOD_RATINGS = Object.values(MoodRating).filter(
 export const MIN_MOOD_RATING = 1;
 export const MAX_MOOD_RATING = 10;
 
-export function getMoodLabel(rating: number): string {
-  return MOOD_LABELS[rating as MoodRating] || 'Unknown';
+export function getMoodLabelKey(rating: number): string {
+  return MOOD_LABEL_KEYS[rating as MoodRating] || 'mood.average';
 }
 
 export function getMoodColor(

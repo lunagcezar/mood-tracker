@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/core/textarea';
 import { Button } from '@/components/ui/core/button';
 import { Text } from '@/components/ui/core/text';
 import { useColorScheme, View } from 'react-native';
-import { getMoodColor, getMoodLabel, MAX_MOOD_RATING, MIN_MOOD_RATING } from '@/constants/mood';
+import { getMoodColor, getMoodLabelKey, MAX_MOOD_RATING, MIN_MOOD_RATING } from '@/constants/mood';
 import { CalendarIcon, CheckIcon } from 'lucide-react-native';
 import { useCalendarIndex } from '@/hooks/use-calendar-index';
 import { Calendar } from '@/components/ui/shared/calendar';
@@ -14,6 +14,7 @@ import { formatDateString } from '@/lib/date';
 import { DateString } from '@/types/date';
 import FAB from '@/components/ui/core/fab';
 import { useMoodEditor } from '@/hooks/use-mood-editor';
+import { useTranslation } from '@/hooks/use-translation';
 
 type MoodEditorProps = {
   mode?: 'create' | 'edit';
@@ -36,6 +37,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
   const { moodByDate, calendarDays, changeMonth, monthName, currentYear } = useCalendarIndex();
 
   const colorScheme = useColorScheme();
+  const { t } = useTranslation();
 
   const handleDateSelect = (dateString: DateString | null) => {
     if (dateString) {
@@ -63,7 +65,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <Text>Choose a date</Text>
+              <Text>{t('editor.chooseDate')}</Text>
             </DialogHeader>
             <Calendar
               calendarDays={calendarDays}
@@ -80,14 +82,14 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
         </Dialog>
       )}
       <Text variant="h3" className="text-center">
-        How are you feeling?
+        {t('editor.howAreYouFeeling')}
       </Text>
       <View className="gap-4">
         <Text variant="h1" className="text-center">
           {dayRating}
         </Text>
         <Text variant="h4" className="text-center">
-          {getMoodLabel(dayRating)}
+          {t(getMoodLabelKey(dayRating))}
         </Text>
       </View>
 
@@ -102,7 +104,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
         activeStepColor={getMoodColor(dayRating, colorScheme)}
       />
       <Textarea
-        placeholder="Type details about your day"
+        placeholder={t('editor.typeDetails')}
         value={dayDetails}
         onChangeText={setDayDetails}
       />

@@ -16,6 +16,7 @@ import { formatDateString } from '@/lib/date';
 import { getMoodColor } from '@/constants/mood';
 import { MoodData } from '@/types/mood';
 import { DateString } from '@/types/date';
+import { useTranslation } from '@/hooks/use-translation';
 
 type MoodDetailsCardProps = {
   selectedMood: MoodData;
@@ -23,6 +24,8 @@ type MoodDetailsCardProps = {
 };
 
 export function MoodDetailsCard({ selectedMood, selectedDateString }: MoodDetailsCardProps) {
+  const { t } = useTranslation();
+
   const handleEdit = () => {
     router.push({
       pathname: '/edit',
@@ -34,7 +37,7 @@ export function MoodDetailsCard({ selectedMood, selectedDateString }: MoodDetail
     <Card>
       <CardHeader className="flex-row items-center justify-between">
         <View className="gap-2">
-          <CardTitle>Mood details</CardTitle>
+          <CardTitle>{t('details.moodDetails')}</CardTitle>
           <CardDescription>
             {formatDateString(selectedDateString, {
               year: 'numeric',
@@ -49,14 +52,14 @@ export function MoodDetailsCard({ selectedMood, selectedDateString }: MoodDetail
       </CardHeader>
       <CardContent className="gap-4">
         <View className="flex-row gap-2">
-          <Text className="font-bold">Rating:</Text>
+          <Text className="font-bold">{t('details.rating')}</Text>
           <Text style={{ color: getMoodColor(selectedMood.dayRating) }}>
             {selectedMood.dayRating}/10
           </Text>
         </View>
         {selectedMood.dayDetails && (
           <View className="flex-row gap-2">
-            <Text className="font-bold">Details:</Text>
+            <Text className="font-bold">{t('details.details')}</Text>
             <Text>{selectedMood.dayDetails}</Text>
           </View>
         )}

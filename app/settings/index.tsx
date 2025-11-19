@@ -15,13 +15,10 @@ import { SettingsRadioGroup } from '@/components/ui/features/settings/settings-r
 import { COLOR_SCHEME_OPTIONS, LANGUAGE_OPTIONS } from '@/constants/settings';
 import { useSettings } from '@/contexts/settings';
 import { useSettingsDialog } from '@/hooks/use-settings-dialog';
-import { getColorSchemeLabel, getLanguageLabel } from '@/lib/settings';
+import { getColorSchemeLabelKey, getLanguageLabelKey } from '@/lib/settings';
+import { useTranslation } from '@/hooks/use-translation';
 import { Stack } from 'expo-router';
 import * as React from 'react';
-
-const SCREEN_OPTIONS = {
-  title: 'Settings',
-};
 
 export default function SettingsIndex() {
   const { settings, updateColorScheme, updateLanguage } = useSettings();
@@ -33,6 +30,11 @@ export default function SettingsIndex() {
     tempLanguage,
     setTempLanguage,
   } = useSettingsDialog();
+  const { t } = useTranslation();
+
+  const SCREEN_OPTIONS = {
+    title: t('screens.settings'),
+  };
 
   const handleSaveColorScheme = async () => {
     await updateColorScheme(tempColorScheme);
@@ -50,8 +52,8 @@ export default function SettingsIndex() {
 
       <>
         <SettingsPressable
-          label="Color scheme"
-          value={getColorSchemeLabel(settings.colorScheme)}
+          label={t('settings.colorScheme')}
+          value={t(getColorSchemeLabelKey(settings.colorScheme))}
           onPress={() => {
             setTempColorScheme(settings.colorScheme);
             setOpenDialog('colorScheme');
@@ -59,8 +61,8 @@ export default function SettingsIndex() {
         />
 
         <SettingsPressable
-          label="Language"
-          value={getLanguageLabel(settings.language)}
+          label={t('settings.language')}
+          value={t(getLanguageLabelKey(settings.language))}
           onPress={() => {
             setTempLanguage(settings.language);
             setOpenDialog('language');
@@ -73,8 +75,8 @@ export default function SettingsIndex() {
         onOpenChange={(open) => !open && setOpenDialog(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Color scheme</DialogTitle>
-            <DialogDescription>Choose your preferred color scheme</DialogDescription>
+            <DialogTitle>{t('settings.colorScheme')}</DialogTitle>
+            <DialogDescription>{t('settings.chooseColorScheme')}</DialogDescription>
           </DialogHeader>
 
           <SettingsRadioGroup
@@ -86,11 +88,11 @@ export default function SettingsIndex() {
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" onPress={() => setOpenDialog(null)}>
-                <Text>Cancel</Text>
+                <Text>{t('actions.cancel')}</Text>
               </Button>
             </DialogClose>
             <Button onPress={handleSaveColorScheme}>
-              <Text>Save</Text>
+              <Text>{t('actions.save')}</Text>
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -101,8 +103,8 @@ export default function SettingsIndex() {
         onOpenChange={(open) => !open && setOpenDialog(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Language</DialogTitle>
-            <DialogDescription>Choose your preferred language</DialogDescription>
+            <DialogTitle>{t('settings.language')}</DialogTitle>
+            <DialogDescription>{t('settings.chooseLanguage')}</DialogDescription>
           </DialogHeader>
 
           <SettingsRadioGroup
@@ -114,11 +116,11 @@ export default function SettingsIndex() {
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline" onPress={() => setOpenDialog(null)}>
-                <Text>Cancel</Text>
+                <Text>{t('actions.cancel')}</Text>
               </Button>
             </DialogClose>
             <Button onPress={handleSaveLanguage}>
-              <Text>Save</Text>
+              <Text>{t('actions.save')}</Text>
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -9,7 +9,7 @@ export type Language = 'en' | 'pt-BR' | 'system';
 
 export type SettingsOption<T> = {
   value: T;
-  label: string;
+  labelKey: string;
 };
 
 export type Settings = {

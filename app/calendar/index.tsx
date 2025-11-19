@@ -6,12 +6,14 @@ import { ScrollView } from 'react-native';
 import { useCalendarIndex } from '@/hooks/use-calendar-index';
 import { Calendar } from '@/components/ui/shared/calendar';
 import { MoodDetailsCard } from '@/components/ui/shared/mood-details-card';
-
-const SCREEN_OPTIONS = {
-  title: 'Calendar',
-};
+import { useTranslation } from '@/hooks/use-translation';
 
 export default function StatsIndex() {
+  const { t } = useTranslation();
+
+  const SCREEN_OPTIONS = {
+    title: t('screens.calendar'),
+  };
   const {
     moodByDate,
     calendarDays,

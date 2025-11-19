@@ -1,6 +1,7 @@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/core/radio-group';
 import { Text } from '@/components/ui/core/text';
 import { SettingsOption } from '@/types/settings';
+import { useTranslation } from '@/hooks/use-translation';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -15,6 +16,8 @@ export function SettingsRadioGroup<T extends string>({
   options,
   onValueChange,
 }: SettingRadioGroupProps<T>) {
+  const { t } = useTranslation();
+
   return (
     <RadioGroup value={value} onValueChange={(val) => onValueChange(val as T)}>
       {options.map((option) => {
@@ -23,7 +26,7 @@ export function SettingsRadioGroup<T extends string>({
           <View key={option.value} className="flex-row items-center gap-3">
             <RadioGroupItem value={option.value} aria-labelledby={labelId} />
             <Text nativeID={labelId} onPress={() => onValueChange(option.value)}>
-              {option.label}
+              {t(option.labelKey)}
             </Text>
           </View>
         );
