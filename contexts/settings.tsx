@@ -49,7 +49,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   }, [settings.colorScheme, systemColorScheme]);
 
   const effectiveLanguage: 'en' | 'pt-BR' = useMemo(() => {
-    return settings.language === 'system' ? getSystemLanguage() : settings.language;
+    const result = settings.language === 'system' ? getSystemLanguage() : settings.language;
+
+    return result;
   }, [settings.language]);
 
   useEffect(() => {

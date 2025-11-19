@@ -56,7 +56,8 @@ export function getTodayString(): DateString {
 
 export function formatDateString(
   dateString: DateString,
-  options?: Intl.DateTimeFormatOptions
+  options?: Intl.DateTimeFormatOptions,
+  locale?: string
 ): string {
-  return stringToDate(dateString).toLocaleDateString('default', options);
+  return stringToDate(dateString).toLocaleDateString(locale || 'en-US', options);
 }

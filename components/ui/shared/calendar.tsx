@@ -6,6 +6,7 @@ import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from 'lucide-react-nati
 import { WEEKDAYS } from '@/constants/date';
 import { CalendarDay, DateString } from '@/types/date';
 import { CalendarDayItem } from '@/components/ui/core/calendar-day';
+import { useTranslation } from '@/hooks/use-translation';
 
 type CalendarProps = {
   calendarDays: CalendarDay[];
@@ -32,6 +33,8 @@ export function Calendar({
   disableFutureDates = false,
   disableDatesWithEntry = false,
 }: CalendarProps) {
+  const { t } = useTranslation();
+
   const renderDay = React.useCallback(
     ({ item }: { item: CalendarDay }) => {
       const mood = item.dateString ? moodByDate[item.dateString] : undefined;
@@ -84,7 +87,9 @@ export function Calendar({
       <View className="my-6 w-full flex-row">
         {WEEKDAYS.map((d) => (
           <View key={d} className="w-1/7">
-            <Text className="text-center text-xs font-bold text-neutral-500">{d}</Text>
+            <Text className="text-center text-xs font-bold text-neutral-500">
+              {t(`weekdays.${d}`)}
+            </Text>
           </View>
         ))}
       </View>

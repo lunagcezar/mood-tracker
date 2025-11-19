@@ -48,4 +48,14 @@ export const ptBR = {
     cancel: 'Cancelar',
     save: 'Salvar',
   },
+
+  weekdays: {
+    sun: 'Dom',
+    mon: 'Seg',
+    tue: 'Ter',
+    wed: 'Qua',
+    thu: 'Qui',
+    fri: 'Sex',
+    sat: 'Sáb',
+  },
 };

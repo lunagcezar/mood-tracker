@@ -24,7 +24,7 @@ type MoodDetailsCardProps = {
 };
 
 export function MoodDetailsCard({ selectedMood, selectedDateString }: MoodDetailsCardProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const handleEdit = () => {
     router.push({
@@ -39,11 +39,15 @@ export function MoodDetailsCard({ selectedMood, selectedDateString }: MoodDetail
         <View className="gap-2">
           <CardTitle>{t('details.moodDetails')}</CardTitle>
           <CardDescription>
-            {formatDateString(selectedDateString, {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric',
-            })}
+            {formatDateString(
+              selectedDateString,
+              {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+              },
+              language
+            )}
           </CardDescription>
         </View>
         <Button variant="outline" className="aspect-square" onPress={handleEdit}>

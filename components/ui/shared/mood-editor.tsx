@@ -37,7 +37,7 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
   const { moodByDate, calendarDays, changeMonth, monthName, currentYear } = useCalendarIndex();
 
   const colorScheme = useColorScheme();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const handleDateSelect = (dateString: DateString | null) => {
     if (dateString) {
@@ -54,12 +54,16 @@ export default function MoodEditor({ mode = 'create', entryId }: MoodEditorProps
             <Button className="gap-4" variant="outline" size="fluid">
               <Icon as={CalendarIcon} className="size-6" />
               <Text className="text-lg font-semibold">
-                {formatDateString(selectedDateString, {
-                  weekday: 'short',
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                })}
+                {formatDateString(
+                  selectedDateString,
+                  {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  },
+                  language
+                )}
               </Text>
             </Button>
           </DialogTrigger>

@@ -2,7 +2,7 @@ import { SETTINGS_KEY } from '@/constants/settings';
 import { setItem } from '@/lib/async-storage';
 import type { Settings } from '@/types/settings';
 import type { ColorScheme, Language } from '@/types/settings';
-import { NativeModules, Platform } from 'react-native';
+import { getLocales } from 'expo-localization';
 
 export function getColorSchemeLabelKey(scheme: ColorScheme): string {
   switch (scheme) {
@@ -27,21 +27,21 @@ export function getLanguageLabelKey(lang: Language): string {
 }
 
 export function getSystemLanguage(): 'en' | 'pt-BR' {
-  let locale = 'en';
+  try {
+    const locales = getLocales();
 
-  if (Platform.OS === 'ios') {
-    locale =
-      NativeModules.SettingsManager?.settings?.AppleLocale ||
-      NativeModules.SettingsManager?.settings?.AppleLanguages?.[0] ||
-      'en';
-  } else if (Platform.OS === 'android') {
-    locale = NativeModules.I18nManager?.localeIdentifier || 'en';
-  } else {
-    locale = navigator?.language || 'en';
-  }
+    if (locales && locales.length > 0) {
+      const locale = locales[0].languageTag || locales[0].languageCode || 'en';
+      const normalizedLocale = locale.toLowerCase().replace('_', '-');
 
-  if (locale.startsWith('pt-BR') || locale.startsWith('pt_BR')) {
-    return 'pt-BR';
+      if (normalizedLocale.startsWith('pt')) {
+        return 'pt-BR';
+      }
+
+      return 'en';
+    }
+  } catch (error) {
+    console.error('[i18n] Error detecting system language:', error);
   }
 
   return 'en';
