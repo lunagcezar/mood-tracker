@@ -58,4 +58,10 @@ export const ptBR = {
     fri: 'Sex',
     sat: 'Sáb',
   },
+
+  statistics: {
+    yearAverage: 'Média do Ano',
+    monthAverage: 'Média do Mês',
+    weekAverage: 'Média da Semana',
+  },
 };

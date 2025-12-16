@@ -58,4 +58,10 @@ export const en = {
     fri: 'Fri',
     sat: 'Sat',
   },
+
+  statistics: {
+    yearAverage: 'Year Average',
+    monthAverage: 'Month Average',
+    weekAverage: 'Week Average',
+  },
 };
